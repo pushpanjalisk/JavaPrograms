@@ -1,54 +1,63 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 
-public class getDataFromFileFunction {
+class restaurantApp {
     public static void main(String[] args) {
-
-        int dataCount = 5;
-        String searchString = "110";
-        // String fileName = "menuList.txt";
-        String fileName = "orderDetails.csv";
-
-        String[] output = getDataFromFile(fileName, searchString, dataCount);
-        System.out.println(Arrays.toString(output));
+        GetFileData objectGetFileData = new GetFileData();
+        String[][] outputData = objectGetFileData.getCompeteDataINArray("menuList.csv", 3);
+        System.out.println(outputData[10][1]);
+        int lastID =  objectGetFileData.getLastID("menuList.csv", 3);
+        System.out.println("Last ID: " + lastID);
     }
+}
 
-    static String[] getDataFromFile(String fileName, String searchString, int dataCount) {
-        String[] outputData = new String[dataCount];
+class GetFileData {
+    public String[][] getCompeteDataINArray(String fileName, int countData) {
+        String[][] completeFileDataArray = null;
+
         try {
-            boolean dataFoundFlag = false;
+            File fileReader = new File(fileName);
+            Scanner scFileReader = new Scanner(fileReader);
 
-            File menuList = new File(fileName);
-            Scanner scFile = new Scanner(menuList);
+            ArrayList<String> completeFileData = new ArrayList<String>();
 
-            while (scFile.hasNext()) {
-                String data = (scFile.nextLine());
-                String menuID = data.substring(0, (data.indexOf(",")));
+            while (scFileReader.hasNext()) {
+                String eachLine = scFileReader.nextLine();
+                completeFileData.add(eachLine);
+            }
 
-                if (menuID.equals(searchString)) {
-                    for (int i = 0; i < dataCount; i++) {
-                        if (i == dataCount - 1) {
-                            outputData[i] = data;
-                        } else {
-                            outputData[i] = data.substring(0, (data.indexOf(",")));
-                            data = data.substring(data.indexOf(",") + 1);
-                        }
+            int sizeCompleteFileData = completeFileData.size();
+            completeFileDataArray = new String[sizeCompleteFileData][countData];
 
+            for (int i = 0; i < sizeCompleteFileData; i++) {
+                String dataLineOne = completeFileData.get(i);
+                for (int j = 0; j < countData; j++) {
+                    if (j == countData - 1) {
+                        completeFileDataArray[i][j] = dataLineOne;
+                    } else {
+                        completeFileDataArray[i][j] = dataLineOne.substring(0, dataLineOne.indexOf(","));
+                        dataLineOne = dataLineOne.substring(dataLineOne.indexOf(",") + 1);
                     }
-                    dataFoundFlag = true;
-                    break;
                 }
             }
-            if (dataFoundFlag == false) {
-                System.out.println("Data not found: " + searchString);
-            }
-            scFile.close();
-            return outputData;
-        } catch (Exception e) {
-            System.out.println("Error while reading the file - menuList" + e.getMessage());
-            return outputData;
-        }
 
+            // System.out.println(completeFileDataArray[10][2]);
+
+            scFileReader.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        return completeFileDataArray;
     }
+
+    public int getLastID(String fileName, int countData){
+        int lastID = 0;
+        String[][] outputData =  this.getCompeteDataINArray(fileName,countData);
+        lastID = Integer.valueOf(outputData[outputData.length-1][0]) ;
+        return lastID;
+    }
+
+
+
 }
