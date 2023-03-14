@@ -1,0 +1,32 @@
+JDBC Driver Installation - 
+
+1. Download and Install JDBC Driver:-
+
+For MySQL - Visit : https://dev.mysql.com/downloads/windows/installer/8.0.html
+Download the MySQL installer (compact version) and run
+
+	a. If MySQL is not installed -
+	- Download and install MySQL - 
+	- Refer to the below YouTube Video for mode Details - https://www.youtube.com/watch?v=2HQC94la6go
+
+	b. If MySQL is already installed then - 
+	skip selecting Server and Workbench and select from 
+	- MySQL Connectors -> Connector/J
+	- Select the latest version from the list and click -> Add
+	- Then proceed with installation
+	- Refer to the below YouTube Video for mode Details 
+	- https://www.youtube.com/watch?v=2PFPj3NLmGw&list=PL0zysOflRCenjuvOwumYLG9TCsEQZrV2M
+
+
+2. Set the Environment Variables
+	
+	a. classpath:-
+	- Copy path from windows explorer	
+	- Open settings and set System variable - Path - Add/Edit
+	- C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-j-8.0.32.jar;.;
+
+
+3. Check Javap Version
+Open CMD
+
+cmd-> javap com.mysql.cj.jdbc.Driver

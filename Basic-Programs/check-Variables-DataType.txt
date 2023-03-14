@@ -1,0 +1,3 @@
+To check the Data type of the Variable - 
+
+System.out.println((Object)<variable_name>.getClass().getSimpleName());
