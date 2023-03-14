@@ -10,6 +10,8 @@ public class dataTypesAndVariables {
         //char data type
         char letter = 'a';
         int amount = 10052;
+
+        System.out.println("Letter: " + letter + "\nAmount: " + amount);
         
     }
 }
